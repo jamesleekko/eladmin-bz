@@ -99,6 +99,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void register(User resources) {
+        if (userRepository.findByUsername(resources.getUsername()) != null) {
+            throw new EntityExistException(User.class, "username", resources.getUsername());
+        }
+        if (userRepository.findByPhone(resources.getPhone()) != null) {
+            throw new EntityExistException(User.class, "phone", resources.getPhone());
+        }
+        userRepository.save(resources);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(User resources) throws Exception {
         User user = userRepository.findById(resources.getId()).orElseGet(User::new);
         ValidationUtil.isNull(user.getId(), "User", "id", resources.getId());

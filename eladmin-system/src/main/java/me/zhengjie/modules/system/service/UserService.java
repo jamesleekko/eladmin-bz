@@ -48,6 +48,12 @@ public interface UserService {
     void create(User resources);
 
     /**
+     * 用户注册
+     * @param resources /
+     */
+    void register(User resources);
+
+    /**
      * 编辑用户
      * @param resources /
      * @throws Exception /

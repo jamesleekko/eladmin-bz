@@ -14,8 +14,8 @@ spring:
     redis:
       repositories:
         enabled: false
-#  pid:
-#    file: /自行指定位置/eladmin.pid
+  #  pid:
+  #    file: /自行指定位置/eladmin.pid
 
   #配置 Jpa
   jpa:
@@ -34,6 +34,12 @@ spring:
     password: ${REDIS_PWD:}
     #连接超时时间
     timeout: 5000
+
+# 大昱丰相关配置
+dayufeng:
+  username: 19173288222
+  password: thz12345
+  login-type: 2
 
 task:
   pool:

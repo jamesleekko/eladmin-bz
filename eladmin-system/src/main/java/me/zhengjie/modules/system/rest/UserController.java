@@ -19,6 +19,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import me.zhengjie.annotation.AnonymousAccess;
 import me.zhengjie.annotation.Log;
 import me.zhengjie.utils.PageResult;
 import me.zhengjie.config.RsaProperties;
@@ -112,6 +113,15 @@ public class UserController {
         // 默认密码 123456
         resources.setPassword(passwordEncoder.encode("123456"));
         userService.create(resources);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Log("用户注册")
+    @ApiOperation("用户注册")
+    @PostMapping(value = "/register")
+    @AnonymousAccess
+    public ResponseEntity<Object> registerUser(@Validated @RequestBody User resources){
+        userService.register(resources);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
