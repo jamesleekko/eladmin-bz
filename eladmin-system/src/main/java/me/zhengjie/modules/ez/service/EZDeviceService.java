@@ -59,7 +59,7 @@ public class EZDeviceService {
                         String deviceName = device.has("deviceName") ? device.get("deviceName").asText(null) : null;
                         String deviceIp = device.has("deviceIp") ? device.get("deviceIp").asText(null) : null;
                         Integer deviceStatus = device.has("status") ? (device.get("status").isInt() ? device.get("status").asInt() : null) : null;
-                        Integer deptId = 18;
+                        Long deptId = 18L;
                         Integer zbType = 1;
 
 

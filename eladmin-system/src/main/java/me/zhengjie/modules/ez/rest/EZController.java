@@ -1,5 +1,7 @@
 package me.zhengjie.modules.ez.rest;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import me.zhengjie.modules.ez.service.EZDeviceService;
 import me.zhengjie.modules.ez.service.EZTokenService;
 import me.zhengjie.modules.system.service.DataService;
 import me.zhengjie.modules.system.service.UserService;
+import me.zhengjie.modules.system.service.dto.UserDto;
+import me.zhengjie.modules.system.service.impl.DataServiceImpl;
 import me.zhengjie.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -63,17 +67,16 @@ public class EZController {
     @ApiOperation("获取设备类型列表")
     @GetMapping(value = "/device_category_list")
     public ResponseEntity<List<SysDeviceCategory>> getDeviceCategoryList() {
-
         // 根据 deptIds 查询设备列表
         List<SysDeviceCategory> categories = sysDeviceCategoryRepository.findAll();
-
         return ResponseEntity.ok(categories);
     }
 
     @ApiOperation("获取摄像头列表")
     @GetMapping(value = "/camera_list")
     public ResponseEntity<List<SysDeviceCamera>> getCameraList() {
-        List<Long> deptIds = dataService.getDeptIds(userService.findByName(SecurityUtils.getCurrentUsername()));
+        UserDto user = userService.findByName(SecurityUtils.getCurrentUsername());
+        List<Long> deptIds = dataService.getDeptIds(user);
 
         // 根据 deptIds 查询设备列表
         List<SysDeviceCamera> devices = sysDeviceCameraRepository.findByDeptIdIn(deptIds);

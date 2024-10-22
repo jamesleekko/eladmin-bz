@@ -64,6 +64,10 @@ public class User extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "用户部门")
     private Dept dept;
 
+//    @NotBlank
+//    @ApiModelProperty(value = "部门Id")
+//    private Long deptId;
+
     @NotBlank
     @Column(unique = true)
     @ApiModelProperty(value = "用户名称")

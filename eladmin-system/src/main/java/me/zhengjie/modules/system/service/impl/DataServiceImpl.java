@@ -16,6 +16,7 @@
 package me.zhengjie.modules.system.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.zhengjie.modules.system.domain.Dept;
 import me.zhengjie.modules.system.service.DataService;
 import me.zhengjie.modules.system.service.DeptService;
@@ -34,6 +35,7 @@ import java.util.*;
  * @description 数据权限服务实现
  * @date 2020-05-07
  **/
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @CacheConfig(cacheNames = "data")
@@ -48,14 +50,16 @@ public class DataServiceImpl implements DataService {
      * @return /
      */
     @Override
-    @Cacheable(key = "'user:' + #p0.id")
+//    @Cacheable(key = "'user:' + #p0.id")
     public List<Long> getDeptIds(UserDto user) {
+        log.info("开始获取deptIds");
         // 用于存储部门id
         Set<Long> deptIds = new HashSet<>();
         // 查询用户角色
         List<RoleSmallDto> roleSet = roleService.findByUsersId(user.getId());
         // 获取对应的部门ID
         for (RoleSmallDto role : roleSet) {
+            log.info("roll dto {}", role);
             DataScopeEnum dataScopeEnum = DataScopeEnum.find(role.getDataScope());
             switch (Objects.requireNonNull(dataScopeEnum)) {
                 case THIS_LEVEL:

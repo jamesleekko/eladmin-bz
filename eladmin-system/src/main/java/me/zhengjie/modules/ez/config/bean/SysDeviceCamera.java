@@ -32,7 +32,7 @@ public class SysDeviceCamera {
     private Integer cameraNo;
 
     @Column(name = "dept_id")
-    private Integer deptId;
+    private Long deptId;
 
     @Column(name = "zb_type")
     private Integer ZBType;
