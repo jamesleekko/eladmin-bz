@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
-
 @Service
 @Slf4j
 public class DayufengApiClient {
@@ -18,7 +16,7 @@ public class DayufengApiClient {
 
     @Autowired
     @Lazy  // 延迟加载TokenService，避免循环依赖
-    private TokenService tokenService;
+    private DayufengTokenService dayufengTokenService;
 
     public <T> ResponseEntity<T> sendRequest(String url, HttpMethod method, Object requestBody, Class<T> responseType, boolean needAuth, boolean retryAllowed) {
         return sendRequestWithRetry(url, method, requestBody, responseType, needAuth, retryAllowed);
@@ -28,7 +26,7 @@ public class DayufengApiClient {
     private <T> ResponseEntity<T> sendRequestWithRetry(String url, HttpMethod method, Object requestBody, Class<T> responseType, boolean needAuth, boolean retryAllowed) {
         HttpHeaders headers = new HttpHeaders();
         if (needAuth) {
-            headers.set("Authorization", "Bearer " + tokenService.getToken());
+            headers.set("Authorization", "Bearer " + dayufengTokenService.getToken());
         }
         HttpEntity<Object> requestEntity = new HttpEntity<>(requestBody, headers);
 
@@ -43,7 +41,7 @@ public class DayufengApiClient {
                 log.warn("Token expired, attempting to refresh token and retry request...");
 
                 // 重新获取新的token
-                tokenService.refreshToken();
+                dayufengTokenService.refreshToken();
 
                 // 重发请求，retryAllowed设为false避免无限循环
                 return sendRequestWithRetry(url, method, requestBody, responseType, true, false);

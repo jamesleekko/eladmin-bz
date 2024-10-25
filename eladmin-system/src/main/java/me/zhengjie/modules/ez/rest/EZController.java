@@ -29,17 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static me.zhengjie.utils.SecurityUtils.getCurrentUser;
-
 @Slf4j
 @RestController
 @RequestMapping("/zb")
 @RequiredArgsConstructor
 @Api(tags = "萤石云相关接口")
 public class EZController {
-
-    @Autowired
-    private EZDeviceService ezDeviceService;
 
     @Autowired
     private EZTokenService ezTokenService;

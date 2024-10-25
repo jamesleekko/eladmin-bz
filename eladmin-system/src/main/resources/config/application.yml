@@ -37,6 +37,7 @@ spring:
 
 # 大昱丰相关配置
 dayufeng:
+  base-url: https://api.dayufeng.cn
   username: 19173288222
   password: thz12345
   login-type: 2
