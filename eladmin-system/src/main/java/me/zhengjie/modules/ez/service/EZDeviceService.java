@@ -40,6 +40,9 @@ public class EZDeviceService {
                 .queryParam("pageSize", 50);
 
         try {
+            //清除现有记录
+            sysDeviceCameraRepository.deleteAll();
+
             // 发送请求
             ResponseEntity<String> response = restTemplate.postForEntity(uriBuilder.toUriString(), null, String.class);
             if (response.getStatusCode().is2xxSuccessful()) {
@@ -58,6 +61,7 @@ public class EZDeviceService {
                         String deviceType = device.has("deviceType") ? device.get("deviceType").asText(null) : null;
                         String deviceName = device.has("deviceName") ? device.get("deviceName").asText(null) : null;
                         String deviceIp = device.has("deviceIp") ? device.get("deviceIp").asText(null) : null;
+                        Integer cameraNo = device.has("cameraNo") ? device.get("cameraNo").asInt() : 1;
                         Integer deviceStatus = device.has("status") ? (device.get("status").isInt() ? device.get("status").asInt() : null) : null;
                         Long deptId = 18L;
                         Integer zbType = 1;
@@ -73,12 +77,12 @@ public class EZDeviceService {
                             deviceEntity.setDeviceType(deviceType);
                             deviceEntity.setDeviceName(deviceName);
                             deviceEntity.setDeviceIp(deviceIp);
+                            deviceEntity.setCameraNo(cameraNo);
                             deviceEntity.setDeviceStatus(deviceStatus);
                             deviceEntity.setDeptId(deptId);
                             deviceEntity.setZBType(zbType);
 
-                            // 覆盖已有的设备记录
-                            saveOrUpdateDevice(deviceEntity);
+                            sysDeviceCameraRepository.save(deviceEntity);
                         }
                     }
                 } else {
