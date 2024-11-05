@@ -114,12 +114,15 @@ file:
   mac:
     path: ~/file/
     avatar: ~/avatar/
+    article: ~/article/
   linux:
     path: /home/eladmin/file/
     avatar: /home/eladmin/avatar/
+    article: /home/eladmin/article/
   windows:
     path: C:\eladmin\file\
     avatar: C:\eladmin\avatar\
+    article: C:\eladmin\article\
   # 文件大小 /M
   maxSize: 100
   avatarMaxSize: 5

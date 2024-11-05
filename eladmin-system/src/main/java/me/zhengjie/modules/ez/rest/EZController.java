@@ -1,7 +1,5 @@
 package me.zhengjie.modules.ez.rest;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -10,24 +8,19 @@ import me.zhengjie.modules.ez.config.bean.SysDeviceCamera;
 import me.zhengjie.modules.ez.config.bean.SysDeviceCategory;
 import me.zhengjie.modules.ez.repository.SysDeviceCameraRepository;
 import me.zhengjie.modules.ez.repository.SysDeviceCategoryRepository;
-import me.zhengjie.modules.ez.service.EZDeviceService;
 import me.zhengjie.modules.ez.service.EZTokenService;
 import me.zhengjie.modules.system.service.DataService;
 import me.zhengjie.modules.system.service.UserService;
 import me.zhengjie.modules.system.service.dto.UserDto;
-import me.zhengjie.modules.system.service.impl.DataServiceImpl;
 import me.zhengjie.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -62,7 +55,6 @@ public class EZController {
     @ApiOperation("获取设备类型列表")
     @GetMapping(value = "/device_category_list")
     public ResponseEntity<List<SysDeviceCategory>> getDeviceCategoryList() {
-        // 根据 deptIds 查询设备列表
         List<SysDeviceCategory> categories = sysDeviceCategoryRepository.findAll();
         return ResponseEntity.ok(categories);
     }
